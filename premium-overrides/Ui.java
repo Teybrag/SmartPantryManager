@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -66,6 +67,24 @@ public final class Ui {
         TextView t = text(a,title,29,DARK,true); t.setTypeface(Typeface.create("sans-serif",Typeface.BOLD));
         LinearLayout.LayoutParams tp=lp(a,-1,-2); tp.topMargin=dp(a,5); root.addView(t,tp);
         TextView s = text(a,subtitle,14,MUTED,false); s.setLineSpacing(dp(a,3),1f); s.setPadding(0,dp(a,6),0,dp(a,18)); root.addView(s,lp(a,-1,-2));
+        // Real food photography gives each screen a polished, visual identity.
+        String lower = title.toLowerCase(java.util.Locale.ROOT);
+        String photoName = (lower.contains("recipe") || lower.contains("meal")) ? "photo_recipe"
+                : (lower.contains("setting") ? "photo_kitchen" : "photo_ingredients");
+        int photoId = a.getResources().getIdentifier(photoName, "drawable", a.getPackageName());
+        if (photoId != 0) {
+            ImageView hero = new ImageView(a);
+            hero.setImageResource(photoId);
+            hero.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            hero.setBackground(round(a, WHITE, 20));
+            hero.setClipToOutline(true);
+            LinearLayout.LayoutParams hp = lp(a,-1,142);
+            hp.bottomMargin = dp(a,16);
+            root.addView(hero,hp);
+            hero.setAlpha(0f);
+            hero.setTranslationY(dp(a,12));
+            hero.animate().alpha(1f).translationY(0f).setStartDelay(90).setDuration(420).start();
+        }
     }
     public static TextView section(Activity a, String label) {
         TextView t=text(a,label,18,DARK,true); t.setPadding(0,dp(a,3),0,dp(a,9)); return t;
