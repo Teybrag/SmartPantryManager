@@ -12,16 +12,20 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-/** Shared visual system: midnight plum, electric violet, aqua highlights and lively motion. */
+/** Vibrant visual system: berry, coral, mango, aqua and playful motion. */
 public final class Ui {
-    public static final int GREEN = Color.rgb(108, 77, 255);
-    public static final int GREEN_DARK = Color.rgb(23, 21, 47);
-    public static final int MINT = Color.rgb(231, 226, 255);
-    public static final int LIME = Color.rgb(108, 240, 210);
-    public static final int DARK = Color.rgb(32, 28, 61);
-    public static final int MUTED = Color.rgb(119, 116, 142);
-    public static final int BG = Color.rgb(247, 246, 252);
+    public static final int GREEN = Color.rgb(255, 70, 112);
+    public static final int GREEN_DARK = Color.rgb(45, 35, 76);
+    public static final int MINT = Color.rgb(255, 237, 243);
+    public static final int LIME = Color.rgb(45, 211, 178);
+    public static final int DARK = Color.rgb(39, 31, 66);
+    public static final int MUTED = Color.rgb(121, 112, 143);
+    public static final int BG = Color.rgb(255, 249, 246);
     public static final int WHITE = Color.WHITE;
+    public static final int CORAL = Color.rgb(255, 111, 97);
+    public static final int MANGO = Color.rgb(255, 190, 72);
+    public static final int AQUA = Color.rgb(61, 214, 199);
+    public static final int LAVENDER = Color.rgb(157, 123, 255);
     private Ui() {}
 
     public static int dp(android.content.Context a, int value) { return (int)(value * a.getResources().getDisplayMetrics().density + 0.5f); }
@@ -38,12 +42,12 @@ public final class Ui {
         Button b = new Button(a); b.setText(value); b.setAllCaps(false); b.setTextSize(15);
         b.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         b.setTextColor(primary ? WHITE : GREEN_DARK);
-        b.setBackground(primary ? gradient(a, GREEN, 0xFF22C9C3, 16) : round(a, WHITE, 16));
+        b.setBackground(primary ? gradient(a, GREEN, CORAL, 17) : round(a, WHITE, 16));
         b.setPadding(dp(a,14), dp(a,7), dp(a,14), dp(a,7));
-        b.setElevation(dp(a, primary ? 4 : 2));
+        b.setElevation(dp(a, primary ? 5 : 2));
         b.setOnTouchListener((v,event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) v.animate().scaleX(.965f).scaleY(.965f).alpha(.92f).setDuration(90).start();
-            else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) v.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(180).start();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) v.animate().scaleX(.95f).scaleY(.95f).alpha(.88f).setDuration(90).start();
+            else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) v.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(190).start();
             return false;
         });
         return b;
@@ -57,8 +61,8 @@ public final class Ui {
     }
     public static LinearLayout.LayoutParams lp(Activity a, int width, int height) { return new LinearLayout.LayoutParams(width < 0 ? width : dp(a,width), height < 0 ? height : dp(a,height)); }
     public static void title(Activity a, LinearLayout root, String title, String subtitle) {
-        TextView eyebrow = text(a, "✦  FRESH IDEAS  /  SMARTER KITCHEN", 10, GREEN, true);
-        eyebrow.setLetterSpacing(.14f); root.addView(eyebrow, lp(a,-1,-2));
+        TextView eyebrow = text(a, "✦  FRESH IDEAS  •  SMARTER KITCHEN", 10, GREEN, true);
+        eyebrow.setLetterSpacing(.12f); root.addView(eyebrow, lp(a,-1,-2));
         TextView t = text(a,title,29,DARK,true); t.setTypeface(Typeface.create("sans-serif",Typeface.BOLD));
         LinearLayout.LayoutParams tp=lp(a,-1,-2); tp.topMargin=dp(a,5); root.addView(t,tp);
         TextView s = text(a,subtitle,14,MUTED,false); s.setLineSpacing(dp(a,3),1f); s.setPadding(0,dp(a,6),0,dp(a,18)); root.addView(s,lp(a,-1,-2));
@@ -68,15 +72,21 @@ public final class Ui {
     }
     public static LinearLayout card(Activity a, int color) {
         LinearLayout c=new LinearLayout(a); c.setOrientation(LinearLayout.VERTICAL);
-        c.setPadding(dp(a,16),dp(a,15),dp(a,16),dp(a,15)); c.setBackground(round(a,color,22));
-        c.setElevation(dp(a,5)); return c;
+        c.setPadding(dp(a,16),dp(a,15),dp(a,16),dp(a,15));
+        GradientDrawable bg=round(a,color,22);
+        bg.setStroke(dp(a,1),0xFFFFD5DF);
+        c.setBackground(bg); c.setElevation(dp(a,5));
+        c.setClipToOutline(true);
+        return c;
     }
     public static void nav(Activity a, LinearLayout root) {
         LinearLayout row = new LinearLayout(a); row.setOrientation(LinearLayout.HORIZONTAL); row.setGravity(Gravity.CENTER);
-        row.setPadding(dp(a,5),dp(a,5),dp(a,5),dp(a,5)); row.setElevation(dp(a,3)); row.setBackground(round(a,0xFFEAE7F8,18));
-        Button pantry = button(a,"⌂ Pantry",false), recipes = button(a,"♨ Recipes",false), settings = button(a,"⚙ Settings",false);
+        row.setPadding(dp(a,5),dp(a,5),dp(a,5),dp(a,5)); row.setElevation(dp(a,4));
+        row.setBackground(gradient(a,0xFFFFE8EF,0xFFFFF0D8,18));
+        Button pantry = button(a,"⌂ Pantry",false), recipes = button(a,"✿ Recipes",false), settings = button(a,"⚙ Settings",false);
         pantry.setTextSize(12); recipes.setTextSize(12); settings.setTextSize(12);
-        pantry.setBackground(round(a,WHITE,14)); recipes.setBackground(round(a,0xFFEAE7F8,14)); settings.setBackground(round(a,0xFFEAE7F8,14));
+        pantry.setBackground(gradient(a,0xFFFF4778,0xFFFF9478,14)); pantry.setTextColor(WHITE);
+        recipes.setBackground(round(a,0xFFFFFFFF,14)); settings.setBackground(round(a,0xFFFFFFFF,14));
         row.addView(pantry,new LinearLayout.LayoutParams(0,dp(a,42),1)); row.addView(recipes,new LinearLayout.LayoutParams(0,dp(a,42),1)); row.addView(settings,new LinearLayout.LayoutParams(0,dp(a,42),1));
         pantry.setOnClickListener(v -> a.startActivity(new android.content.Intent(a,MainActivity.class)));
         recipes.setOnClickListener(v -> a.startActivity(new android.content.Intent(a,SuggestedRecipesActivity.class)));
@@ -92,12 +102,12 @@ public final class Ui {
     }
     public static void animateChildren(LinearLayout parent) {
         for (int i=0;i<parent.getChildCount();i++) {
-            View child=parent.getChildAt(i); child.setAlpha(0f); child.setTranslationY(dp(parent.getContext(),18)); child.setScaleX(.985f);
-            child.animate().alpha(1f).translationY(0f).scaleX(1f).setStartDelay(Math.min(i*48,340)).setDuration(380).start();
+            View child=parent.getChildAt(i); child.setAlpha(0f); child.setTranslationY(dp(parent.getContext(),20)); child.setScaleX(.98f);
+            child.animate().alpha(1f).translationY(0f).scaleX(1f).setStartDelay(Math.min(i*52,360)).setDuration(420).start();
         }
     }
     public static void animateCard(View view, int position) {
-        view.setAlpha(0f); view.setTranslationY(dp(view.getContext(),14)); view.setScaleX(.97f);
-        view.animate().alpha(1f).translationY(0f).scaleX(1f).setStartDelay(Math.min(position*44,280)).setDuration(340).start();
+        view.setAlpha(0f); view.setTranslationY(dp(view.getContext(),16)); view.setScaleX(.97f);
+        view.animate().alpha(1f).translationY(0f).scaleX(1f).setStartDelay(Math.min(position*48,300)).setDuration(360).start();
     }
 }
