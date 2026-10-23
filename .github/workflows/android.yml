@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'SmartPantryManager_Advanced.zip'
+      - 'premium-overrides/**'
       - '.github/workflows/android.yml'
 
 jobs:
@@ -19,6 +20,9 @@ jobs:
 
       - name: Extract Android project
         run: unzip -q SmartPantryManager_Advanced.zip -d .
+
+      - name: Apply premium UI theme
+        run: cp premium-overrides/Ui.java SmartPantryManager/app/src/main/java/com/teybrag/smartpantry/Ui.java
 
       - name: Set up Java
         uses: actions/setup-java@v4
