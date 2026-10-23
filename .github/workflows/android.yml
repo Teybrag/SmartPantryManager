@@ -35,6 +35,13 @@ jobs:
         with:
           packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
 
+      - name: Add real food photography assets
+        run: |
+          mkdir -p SmartPantryManager/app/src/main/res/drawable-nodpi
+          curl -fL --retry 3 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=1200&auto=format&fit=crop&q=85' -o SmartPantryManager/app/src/main/res/drawable-nodpi/photo_ingredients.jpg
+          curl -fL --retry 3 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&auto=format&fit=crop&q=85' -o SmartPantryManager/app/src/main/res/drawable-nodpi/photo_recipe.jpg
+          curl -fL --retry 3 'https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&auto=format&fit=crop&q=85' -o SmartPantryManager/app/src/main/res/drawable-nodpi/photo_kitchen.jpg
+
       - name: Build debug APK
         working-directory: SmartPantryManager
         run: gradle --no-daemon assembleDebug
